@@ -53,7 +53,12 @@ router.post('/', upload.single('image'), async (request, response) => {
   let blog = new Blog({
     title: request.body.title,
     author: request.body.author,
+    category: request.body.category,
+    featuredImage: request.body.featuredImage,
+    thumbnailImage: request.body.thumbnailImage    ,
     description: request.body.description,
+
+
     img: request.file.filename,
   });
 

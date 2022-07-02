@@ -18,6 +18,15 @@ const blogSchema = new mongoose.Schema({
     description:{
         type:String
     },
+    category:{
+        type:String
+    },
+    featuredImage:{
+        type:String
+    },
+    thumbnailImage:{
+        type:String
+    },
     timeCreated: {
         type: Date,
         default: () => Date.now(),
