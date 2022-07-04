@@ -1,11 +1,12 @@
 const mongoose=require('mongoose');
-
+require('dotenv').config();
 //const URI="mongodb://root:root@nodeapp-shard-00-00.pkh5k.mongodb.net:27017,nodeapp-shard-00-01.pkh5k.mongodb.net:27017,nodeapp-shard-00-02.pkh5k.mongodb.net:27017/myFirstDatabase?ssl=true&replicaSet=atlas-qxo1jk-shard-0&authSource=admin&retryWrites=true&w=majority"
 //;
-const URI="mongodb://admin:M9ED0THWL5P0D9QRUEZS@Kubeshop.in:27017/Kubeproject?authSource=admin";
+const URL=process.env.URI;
+
 
 const connectDB = async()=>{
-    await mongoose.connect(URI,{
+    await mongoose.connect(URL,{
         useUnifiedTopology:true,
         useNewUrlParser: true
     });
