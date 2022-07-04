@@ -37,8 +37,8 @@ router.get('/new',(request,response)=>{
     response.render('new');
 });
 // view route
-router.get('/:slug',async(request,response)=>{
-    let blog = await Blog.findOne({ slug: request.params.slug });
+router.get('/:_id',async(request,response)=>{
+    let blog = await Blog.findOne({ _id: request.params._id });
     if(blog){
         response.render('show',{blog: blog});
     }else{
@@ -56,7 +56,8 @@ router.post('/', upload.single('image'), async (request, response) => {
     category: request.body.category,
     featuredImage: request.body.featuredImage,
     thumbnailImage: request.body.thumbnailImage    ,
-    description: request.body.description,
+    desc: request.body.desc,
+    slugtitle: request.body.slugtitle,
 
 
     img: request.file.filename,
@@ -65,7 +66,7 @@ router.post('/', upload.single('image'), async (request, response) => {
   try {
     blog = await blog.save();
 
-    response.redirect(`blogs/${blog.slug}`);
+    response.redirect(`blogs/${blog._id}`);
   } catch (error) {
     console.log(error);
   }
@@ -73,7 +74,7 @@ router.post('/', upload.single('image'), async (request, response) => {
 
 
 //route that handle edit
-router.get('/edit/:id', async (request, response) => {
+router.get('/edit/:_id', async (request, response) => {
     let blog = await Blog.findById(request.params.id);
     response.render('edit', { blog: blog });
 });
@@ -89,7 +90,7 @@ router.put('/:id', async (request, response) => {
     try {
       blog = await blog.save();
       //redirect to the view route
-      response.redirect(`/blogs/${blog.slug}`);
+      response.redirect(`/blogs/${blog._id}`);
     } catch (error) {
       console.log(error);
       response.redirect(`/seblogs/edit/${blog.id}`, { blog: blog });

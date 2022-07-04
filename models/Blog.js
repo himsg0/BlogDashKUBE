@@ -5,9 +5,13 @@ const { JSDOM } = require('jsdom');
 const htmlPurify = domPurifier(new JSDOM().window);
 const {stripHtml} = require('string-strip-html');
 
-mongoose.plugin(slug);
+
 const blogSchema = new mongoose.Schema({
     title:{
+        type:String,
+        required: true,
+    },
+    slugtitle:{
         type:String,
         required: true,
     },
@@ -27,6 +31,9 @@ const blogSchema = new mongoose.Schema({
     thumbnailImage:{
         type:String
     },
+    desc:{
+        type:String
+    },
     timeCreated: {
         type: Date,
         default: () => Date.now(),
@@ -38,16 +45,11 @@ const blogSchema = new mongoose.Schema({
         type:String,
         default:"placeholder.jpg"
     },
-    slug: { type: String, slug: 'title', unique: true, slug_padding_size: 2 },
-});
-blogSchema.pre('validate', function (next) {
-    //check if there is a description
-    if (this.description) {
-      this.description = htmlPurify.sanitize(this.description);
-      this.snippet = stripHtml(this.description.substring(0, 200)).result;
-    }
-  
-    next();
+    
 });
 
-module.exports= mongoose.model('Blog',blogSchema);
+  
+    
+
+
+module.exports= mongoose.model('post',blogSchema);
